@@ -1,13 +1,26 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views import generic
 
+from app_download import models
+from app_download.forms import VideoForm
 from app_download.models import Video
 
 
+class IndexView(generic.FormView):
+    form_class = VideoForm
+    model = Video
+    template_name = 'app_download/index.html'
+
+    def form_valid(self, form):
+        videos = models.objects.all()
+        context = self.get_context_data()
+        return render(self.request, self.template_name, context)
+
+
 def index(request):
-    videos = Video.objects.all()[:5]
-    output = ', '.join([q.name for q in videos])
-    return HttpResponse(output)
+    return render(request, 'index.html')
+    #return HttpResponse(output)
 
 
 def detail(request, question_id):
