@@ -7,6 +7,7 @@ class Video(models.Model):
     long_seconds = models.IntegerField()
     source = models.CharField(max_length=128)
     description = models.CharField(max_length=500)
+    url_image = models.CharField(max_length=300)
 
     class Meta:
         db_table = 'video'
